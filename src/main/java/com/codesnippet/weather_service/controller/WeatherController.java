@@ -1,6 +1,5 @@
 package com.codesnippet.weather_service.controller;
 
-
 import com.codesnippet.weather_service.entity.Weather;
 import com.codesnippet.weather_service.repository.WeatherRepository;
 import com.codesnippet.weather_service.service.CacheInspectionService;
@@ -24,8 +23,7 @@ public class WeatherController {
 
     @GetMapping
     public String getWeather(@RequestParam String city) {
-        String weatherByCity
-                = weatherService.getWeatherByCity(city);
+        String weatherByCity = weatherService.getWeatherByCity(city);
         return weatherByCity;
     }
 
@@ -38,18 +36,26 @@ public class WeatherController {
     public List<Weather> getAllWeather() {
         return weatherRepository.findAll();
     }
+
     @GetMapping("/cacheData")
     public void getCacheDate() {
         cacheInspectionService.printCacheContents("weather");
     }
+
     @PutMapping("/{city}")
     public String updateWeather(@PathVariable String city, @RequestParam String weatherUpdate) {
         return weatherService.updateWeather(city, weatherUpdate);
     }
+
     @DeleteMapping("/{city}")
     public String deleteWeather(@PathVariable String city) {
         weatherService.deleteWeather(city);
         return "Weather data for " + city + " has been deleted and cache evicted.";
+    }
+
+    @GetMapping("/health")
+    public String getHealth() {
+        return "healthy";
     }
 
 }
