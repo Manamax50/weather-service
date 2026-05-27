@@ -28,7 +28,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll()
+                .csrf(customizer->customizer.disable())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**", "/authenticate").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .build();
